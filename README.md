@@ -2,12 +2,12 @@
 
 This showcases the frontend for a generic image component that has following features:
 
-* Automatically load the rendition in the best possible size, based on the element size
+* Loads the rendition in the best possible size, based on the element size
 * Knows from the server which rendition sizes are available
-* Offer the optional possibility of lazy loading
-* Not load hidden images
-* Update function and event for forcing a refresh of the image
-* Post-init and post-update hooks
+* Offers lazy loading as an option (enabled by default)
+* Does not load hidden images
+* Provides update function and event for forcing a refresh
+* Post-init and post-update hooks for customizations
 * Automatic initialization by a component manager (```cqComponent```)
 
 ## Usage
@@ -37,7 +37,7 @@ The image component accepts a number of options, which can either be passed indi
 * **imageSelector:** The selector for the image element (type: string, default: "img")
 * **sourceAttribute:** The attribute name for the image source (type: string, default: "src")
 * **smartSizes:** If an array of possible sizes is provided, this also enables the smart image loader. (type: array of integers, default: undefined)
-* **smartSources:** If ```smartSizes``` has been provided, this array must contain exactly the same number of items with the corresponding image URLs (type: array of strings, default: undefined)
+* **smartSources:** If smartSizes has been provided, this array must contain exactly the same number of items with the corresponding image URLs (type: array of strings, default: undefined)
 * **lazyEnabled:** Determines if smart image loading is active (type: boolean, default: true)
 * **lazyThreshold:** Number of pixels below the viewport that images start loading (type: integer, default: 100)
 * **lazyEmptyPixel:** URL of an empty pixel image to hide the image while lazy loading (type: string, default: a data URL of an empty pixel gif)
