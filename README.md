@@ -49,12 +49,16 @@ The image component accepts a number of options, which can either be passed indi
 
 Works with an ```<object>``` element as well, but the element name and source attributes have to be configured accordingly:
 ```html
-<noscript data-component='{"component":"cqImage","imageSelector":"object","sourceAttribute":"data","smartSizes":[100,200,400,800,1000,1400,1800],"smartSources":["img/lighthouse-100.jpg","img/lighthouse-200.jpg","img/lighthouse-400.jpg","img/lighthouse-800.jpg","img/lighthouse-1000.jpg","img/lighthouse-1400.jpg","img/lighthouse-1800.jpg"]}'><object data="img/lighthouse-800.jpg" width="800" height="535" alt="Lighthouse"></object></noscript>
+<noscript data-component='{"component":"cqImage","imageSelector":"object","sourceAttribute":"data","smartSizes":[100,200,400,800,1000,1400,1800],"smartSources":["img/lighthouse-100.jpg","img/lighthouse-200.jpg","img/lighthouse-400.jpg","img/lighthouse-800.jpg","img/lighthouse-1000.jpg","img/lighthouse-1400.jpg","img/lighthouse-1800.jpg"]}'>
+    <object data="img/lighthouse-800.jpg" width="800" height="535" alt="Lighthouse"></object>
+</noscript>
 ```
 
 A minimal example, without smart loading of the ideal image size, but with lazy loading:
 ```html
-<noscript data-component='{"component":"cqImage"}'><img src="img/lighthouse-800.jpg" width="800" height="535" alt="Lighthouse"/></noscript>
+<noscript data-component='{"component":"cqImage"}'>
+    <img src="img/lighthouse-800.jpg" width="800" height="535" alt="Lighthouse"/>
+</noscript>
 ```
 
 Not optimal, omitting the ```<noscript>``` element will make the browser to first load the ```lighthouse-800.jpg``` image, making lazy loading pointless (so disabling it in the config), but smart loading could still be performed to load the proper size:
