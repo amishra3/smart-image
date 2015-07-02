@@ -1,0 +1,56 @@
+body {
+    margin: 0;
+}
+
+.col-container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+.col-item {
+    float: left;
+    padding: 5% 5% 0;
+}
+.col-item-4 {
+    width: 18.75%;
+}
+.col-item-3 {
+    width: 26.666%;
+}
+.col-item-2 {
+    width: 42.5%;
+}
+.col-item-2-1,
+.col-item-3-1,
+.col-item-3-2,
+.col-item-4-1,
+.col-item-4-2,
+.col-item-4-3 {
+    padding-right: 2.5%;
+}
+.col-item-2-2,
+.col-item-3-2,
+.col-item-3-3,
+.col-item-4-2,
+.col-item-4-3,
+.col-item-4-4 {
+    padding-left: 2.5%;
+}
+.container {
+    padding: 5%;
+}
+
+.cq-image {
+    position: relative;
+}
+img.cq-image,
+.cq-image img,
+.cq-image object {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+img.loading,
+object.loading {
+    background: url(../img/loader.gif) 50% no-repeat;
+}
