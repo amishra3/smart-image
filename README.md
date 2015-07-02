@@ -70,7 +70,7 @@ Not optimal, omitting the ```<noscript>``` element will make the browser to firs
 
 Disabling lazy loading altogether:
 ```javascript
-cqComponent.fn.cqImage.defaults.enableLazy = false;
+cqComponent.fn.cqImage.defaults.lazyEnabled = false;
 ```
 
 Manually requesting all components to update, for e.g. after some previously hidden images have been revealed:
