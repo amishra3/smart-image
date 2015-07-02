@@ -10,6 +10,11 @@ This showcases the frontend for a generic image component that has following fea
 * Post-init and post-update hooks for customizations
 * Automatic initialization by a component manager (```cqComponent```)
 
+## Example
+
+A live example can be accessed here:
+http://gabrielwalt.github.io/smart-image/
+
 ## Usage
 
 To display an image that benefits of all the above mentioned features, following is the recommended markup:
