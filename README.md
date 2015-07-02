@@ -81,11 +81,9 @@ cqComponent.update();
 Providing some post-initialization or post-update hooks, for e.g. to enrich the images with further behaviors:
 ```javascript
 cqComponent.fn.cqImage.prototype.postInit = function () {
-    console.log("initialized");
     console.log(this.element[0]);
 }
 cqComponent.fn.cqImage.prototype.postUpdate = function () {
-    console.log("updated");
-    console.log(this.image.attr("src"));
+    console.log("updated " + this.image.attr("src"));
 }
 ```
