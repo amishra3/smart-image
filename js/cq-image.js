@@ -6,6 +6,7 @@
 
     function cqImage(element, options) {
         var that = this,
+            showsLazyLoader = false,
             image,
             updateMode;
 
@@ -34,7 +35,6 @@
             if (options.enableLazy) {
                 addLazyLoader();
                 if (isLazyVisible()) {
-                    removeLazyLoader();
                     initSmart();
                 } else {
                     image.addClass(options.lazyLoaderClass);
@@ -58,6 +58,10 @@
                     .removeAttr(options.renamedSourceAttribute);
             }
 
+            if (showsLazyLoader) {
+                image.load(removeLazyLoader);
+            }
+
             if ("postInit" in that) {
                 that.postInit();
             }
@@ -76,6 +80,7 @@
             }
 
             image.attr(options.sourceAttribute, options.lazyEmptyPixel);
+            showsLazyLoader = true;
         }
 
         function removeLazyLoader() {
@@ -83,6 +88,7 @@
             $.each(options.lazyLoaderStyle, function (property) {
                 image.css(property, ""); // removes the loader styles
             });
+            showsLazyLoader = false;
         }
 
         function isLazyVisible() {
@@ -97,7 +103,6 @@
             if (updateMode === "lazy") {
                 if (isLazyVisible()) {
                     $window.unbind(".imageLazy", that.update);
-                    removeLazyLoader();
                     initSmart();
                 }
             } else if (updateMode === "smart") {
