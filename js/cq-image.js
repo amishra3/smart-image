@@ -13,7 +13,7 @@
         function init() {
             var noscript = element.find(options.noscriptSelector),
                 noscriptSearch = " " + options.sourceAttribute + "=",
-                noscriptReplace = " " + options.renamedSourceAttribute + "=",
+                noscriptReplace = " data-src-disabled=",
                 noscriptText = noscript.text().replace(noscriptSearch, noscriptReplace);
 
             noscript.replaceWith(noscriptText);
@@ -32,7 +32,7 @@
         }
 
         function initLazy() {
-            if (options.enableLazy) {
+            if (options.lazyEnabled) {
                 addLazyLoader();
                 if (isLazyVisible()) {
                     initSmart();
@@ -40,7 +40,7 @@
                     image.addClass(options.lazyLoaderClass);
                     updateMode = "lazy";
                     setTimeout(that.update, 200);
-                    $window.bind("scroll.imageLazy resize.imageLazy update.imageLazy", that.update);
+                    $window.bind("scroll.cqImage resize.cqImage update.cqImage", that.update);
                 }
             } else {
                 initSmart();
@@ -48,18 +48,22 @@
         }
 
         function initSmart() {
-            if (options.enableSmart) {
-                updateMode = "smart";
-                that.update();
-                $window.bind("resize.imageSmart update.imageSmart", that.update);
-            } else {
+            if (options.smartSizes && options.smartImages) {
+                if (console && options.smartSizes.length !== options.smartImages.length) {
+                    console.warn("The size of the smartSizes and of the smartImages arrays don't match!");
+                } else {
+                    updateMode = "smart";
+                    that.update();
+                    $window.bind("resize.cqImage update.cqImage", that.update);
+                }
+            } else if (options.loadHidden || element.is(":visible")) {
                 image
-                    .attr(options.sourceAttribute, image.attr(options.renamedSourceAttribute))
-                    .removeAttr(options.renamedSourceAttribute);
+                    .attr(options.sourceAttribute, image.attr("data-src-disabled"))
+                    .removeAttr("data-src-disabled");
             }
 
             if (showsLazyLoader) {
-                image.load(removeLazyLoader);
+                image.bind("load.cqImage", removeLazyLoader);
             }
 
             if ("postInit" in that) {
@@ -88,6 +92,7 @@
             $.each(options.lazyLoaderStyle, function (property) {
                 image.css(property, ""); // removes the loader styles
             });
+            image.unbind(".cqImage", removeLazyLoader);
             showsLazyLoader = false;
         }
 
@@ -102,25 +107,23 @@
         that.update = function (e) {
             if (updateMode === "lazy") {
                 if (isLazyVisible()) {
-                    $window.unbind(".imageLazy", that.update);
+                    $window.unbind(".cqImage", that.update);
                     initSmart();
                 }
-            } else if (updateMode === "smart") {
-                if (element.is(":visible")) {
-                    var optimalSize = element.width() * devicePixelRatio,
-                        len = options.sizes.length,
-                        key = 0;
+            } else if (updateMode === "smart" && (options.loadHidden || element.is(":visible"))) {
+                var optimalSize = element.width() * devicePixelRatio,
+                    len = options.smartSizes.length,
+                    key = 0;
 
-                    while ((key < len-1) && (options.sizes[key] < optimalSize)) {
-                        key++;
-                    }
+                while ((key < len-1) && (options.smartSizes[key] < optimalSize)) {
+                    key++;
+                }
 
-                    if (image.attr(options.sourceAttribute) !== options.images[key]) {
-                        image.attr(options.sourceAttribute, options.images[key]);
+                if (image.attr(options.sourceAttribute) !== options.smartImages[key]) {
+                    image.attr(options.sourceAttribute, options.smartImages[key]);
 
-                        if (e && "postUpdate" in that) {
-                            that.postUpdate(e);
-                        }
+                    if (e && "postUpdate" in that) {
+                        that.postUpdate(e);
                     }
                 }
             }
@@ -132,12 +135,11 @@
     }
 
     cqImage.defaults = {
-        enableSmart: true,
-        enableLazy: true,
+        loadHidden: false,
         noscriptSelector: "noscript",
         imageSelector: "img",
         sourceAttribute: "src",
-        renamedSourceAttribute: "data-src-disabled",
+        lazyEnabled: true,
         lazyThreshold: 100,
         lazyEmptyPixel: "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7",
         lazyLoaderClass: "loading",
