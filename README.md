@@ -33,6 +33,7 @@ But the above markup can be customized to quite some extend, and the script shou
 
 The image component accepts a number of options, which can either be passed individually along in the ```data-component``` JSON, or set globally with a script.
 
+* **loadHidden:** Determines if hidden images are to be loaded. (type: boolean, default: false)
 * **noscriptSelector:** The selector for the noscript element to be removed (type: string, default: "noscript")
 * **imageSelector:** The selector for the image element (type: string, default: "img")
 * **sourceAttribute:** The attribute name for the image source (type: string, default: "src")
@@ -43,7 +44,6 @@ The image component accepts a number of options, which can either be passed indi
 * **lazyEmptyPixel:** URL of an empty pixel image to hide the image while lazy loading (type: string, default: a data URL of an empty pixel gif)
 * **lazyLoaderClass:** Class name to add to the image while it is lazy loading, for further styling (type: string, default: "loading")
 * **lazyLoaderStyle:** CSS styles to add to the image while it is lazy loading, for hiding the image, while keeping the space it takes (type: object)
-* **loadHidden:** Determines if hidden images are to be loaded. By default this is the case if using the smart loader, and not if disabling it, but setting this value to true or false can force a different behavior. (type: boolean, default: undefined)
 
 #### Customizing with the data-component JSON
 
